@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@types/bitwise-xor": "0.0.30",
+    "axios": "^0.18.0",
     "bignumber.js": "^4.1.0",
     "bitwise-xor": "0.0.0",
     "bluebird": "^3.5.1",
@@ -62,7 +63,7 @@
     "js-sha3": "^0.7.0",
     "lodash": "^4.17.5",
     "npm": "^6.4.0",
-    "web3": "0.20.6",
-    "protocol2-js": "file:../protocol2-js"
+    "protocol2-js": "file:../protocol2-js",
+    "web3": "0.20.6"
   }
 }
