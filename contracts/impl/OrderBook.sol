@@ -32,7 +32,7 @@ contract OrderBook is IOrderBook, NoDefaultFunc, Errors {
     using OrderHelper     for Data.Order;
 
     function submitOrder(bytes32[] dataArray)
-        external
+        external returns (bytes32)
     {
         require(dataArray.length >= 18, INVALID_SIZE);
         bool allOrNone = false;
@@ -88,6 +88,21 @@ contract OrderBook is IOrderBook, NoDefaultFunc, Errors {
         orderSubmitted[order.hash] = true;
         orders[order.hash] = dataArray;
         emit OrderSubmitted(msg.sender, order.hash);
+        return order.hash;
+    }
+
+    function removeOrder(bytes32 orderHash) external {
+        bytes32[] memory dataArray = orders[orderHash];
+
+        /// msg.sender must be order's owner or broker.
+        /// no need to check order's broker is registered here. it will be checked during
+        /// ring settlement.
+        require(
+            msg.sender == address(dataArray[0]) || msg.sender == address(dataArray[6]),
+            UNAUTHORIZED_ONCHAIN_ORDER
+        );
+        delete orders[orderHash];
+        delete orderSubmitted[orderHash];
     }
 
     function getOrderData(bytes32 orderHash)

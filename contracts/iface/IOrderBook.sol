@@ -43,7 +43,10 @@ contract IOrderBook {
     function submitOrder(
         bytes32[] dataArray
         )
-        external;
+        external
+        returns (bytes32);
+
+    function removeOrder(bytes32 orderHash) external;
 
     /// @dev   Returns the order data of an order submitted in the order book.
     /// @param orderHash The hash of the order to return the data for.
